@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <title>Document</title>
+
+    <style>
+      input {
+        width: 30%;
+      }
+      .todo-item {
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        padding: 10px;
+        border-radius: 1em;
+        max-width: 600px;
+        display: flex;
+        justify-content: space-between;
+      }
+      #listwrapper {
+        list-style-type: none;
+        padding-left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" name="" id="todoInput" value="" />
+
+    <div id="btn-container"></div>
+
+    <ul id="listwrapper"></ul>
+
+    <script defer>
+      // have id on the base of id get text and set to the input
+      // create new object and add copy of related object and change only text of single object
+      //  update the index of array with new object and update DOM.
+
+      debugger;
+      let TodoList = [];
+      let todoInput = document.querySelector("#todoInput");
+      let InputVal = "";
+      let UpdateBtn;
+
+      const btnContain = document.querySelector("#btn-container");
+      console.log("button container", btnContain);
+
+      let addBtn;
+
+      let isEdit = false;
+
+      let deleteBtn;
+
+      let editInputWrap;
+
+      console.log("edit input wrapper top console", editInputWrap);
+      const listWrapper = document.querySelector("#listwrapper");
+      let listContent;
+      let editInput;
+
+      const AddItem = () => {
+        console.log("test");
+        TodoList.push({
+          id: TodoList.length,
+          text: InputVal,
+        });
+        editInputWrap = document.querySelectorAll(".edit-input-wrap");
+        console.log(editInputWrap);
+        appendList(TodoList);
+        todoInput.value = "";
+      };
+
+      const appendtBtn = (isEdit) => {
+        btnContain.innerHTML = "";
+        if (!isEdit) {
+          btnContain.innerHTML += "<button id='add-btn'>Add</button>";
+          addBtn = document.querySelector("#add-btn");
+        } else {
+          btnContain.innerHTML += "<button id='update-btn'>Update</button>";
+          UpdateBtn = document.querySelector("#update-btn");
+        }
+      };
+
+      const editList = (id) => {
+        console.log("editing the list", id);
+        console.log(TodoList[id].text);
+
+        todoInput.value = TodoList[id].text;
+
+        console.log(TodoList[id]);
+        let listCopy = { ...TodoList[id], text: "" };
+
+        appendtBtn(true);
+      };
+
+      const updateItem = () => {
+        alert();
+      };
+
+      let inputValFunc = (e) => {
+        e.target.setAttribute("value", e.target.value);
+        InputVal = e.target.value;
+
+        console.log(InputVal);
+      };
+      // Create list Item
+      const listItem = (rectodo) => {
+        return `<li class="todo-item"><div>${rectodo.text}</div><div class="edit-input-wrap"></div><div><i class="fa-solid fa-circle-check" style="margin-right:6px;"></i> <i class="fa-solid fa-pen-circle" onclick="editList(${rectodo.id})" style="margin-right:6px;"></i><i class="fa-solid fa-circle-trash" id="delete-icon" onclick="deleteItem(${rectodo.id})" style="margin-right:6px;"></i></div></li><br/>`;
+      };
+      // Append list item in DOM
+
+      const appendList = (list = []) => {
+        listWrapper.innerHTML = "";
+
+        list.forEach((sendtodo) => {
+          listWrapper.innerHTML += listItem(sendtodo);
+        });
+        editBtn = document.querySelector(".fa-pen-circle");
+        console.log("edit button console", editBtn);
+        editInputWrap = document.querySelectorAll(".edit-input-wrap");
+      };
+      appendtBtn();
+
+      todoInput.addEventListener("input", inputValFunc);
+      addBtn.addEventListener("click", AddItem);
+      UpdateBtn.addEventListener("click", updateItem);
+    </script>
+  </body>
+</html>
